@@ -1,0 +1,47 @@
+version: '3'
+services:
+ # The Application
+  erp-hrm-employee-app:
+    image: 196.190.41.213:5000/egov/erp-hrm-employee:v0.0.9
+    working_dir: /var/www
+    container_name: erp-hrm-employee-app-v0.0.9-1
+    volumes:
+      - /var/www/storage
+    env_file: '.env'
+    environment:
+      - "DB_HOST=erp-hrm-employee-db"
+    networks:
+      - app-network 
+    restart: always
+    tty: true
+#The Web Server
+  erp-hrm-employee-web:
+    image: 196.190.41.213:5000/egov/erp-hrm-employee-web:v0.0.9
+    ports:
+      - 9102:80
+      - 721:443
+    container_name: erp-hrm-employee-web-v0.0.9-1
+    networks:
+      - app-network 
+    restart: always
+    tty: true
+#The Database
+  erp-hrm-employee-db:
+    image: mariadb:latest
+    container_name: erp-hrm-employee-db-v0.0.9-1
+    volumes:
+      - dbdata:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=hrm_employee"
+      - "MYSQL_USER=root"
+      - "MYSQL_PASSWORD="
+      - "MYSQL_ROOT_PASSWORD=root"
+    networks:
+      - app-network 
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+#Docker Volumes
+volumes:
+  dbdata:
