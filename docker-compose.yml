@@ -2,9 +2,9 @@ version: '3'
 services:
  # The Application
   erp-hrm-employee-app:
-    image: 196.190.41.213:5000/egov/erp-hrm-employee:v0.0.9
+    image: 196.190.41.213:5000/egov/erp-hrm-employee-app 
     working_dir: /var/www
-    container_name: erp-hrm-employee-app-v0.0.9-1
+    container_name: erp-hrm-employee-app
     volumes:
       - /var/www/storage
     env_file: '.env'
@@ -16,11 +16,11 @@ services:
     tty: true
 #The Web Server
   erp-hrm-employee-web:
-    image: 196.190.41.213:5000/egov/erp-hrm-employee-web:v0.0.9
+    image: 196.190.41.213:5000/egov/erp-hrm-employee-web
     ports:
       - 9102:80
       - 721:443
-    container_name: erp-hrm-employee-web-v0.0.9-1
+    container_name: erp-hrm-employee-web
     networks:
       - app-network 
     restart: always
@@ -28,7 +28,7 @@ services:
 #The Database
   erp-hrm-employee-db:
     image: mariadb:latest
-    container_name: erp-hrm-employee-db-v0.0.9-1
+    container_name: erp-hrm-employee-db
     volumes:
       - dbdata:/var/lib/mysql
     environment:
